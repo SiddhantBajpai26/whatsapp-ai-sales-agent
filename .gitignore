@@ -37,3 +37,4 @@ next-env.d.ts
 
 # Claude Code local tool config (machine-specific, not project source)
 .claude/
+.env*
