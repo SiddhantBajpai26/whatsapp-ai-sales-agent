@@ -50,7 +50,18 @@
     --sidebar-ring: oklch(0.708 0 0);
 
     --font-heading: var(--font-boba-heading), ui-rounded, "Segoe UI", sans-serif;
-    --font-sans: var(--font-boba-body), ui-sans-serif, system-ui, sans-serif;
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+    /* Requested global tokens (not yet wired into any component — see note) */
+    --bg-primary: #0f1117;
+    --bg-secondary: #13151a;
+    --bg-card: rgba(255, 255, 255, 0.04);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --accent-green: #00ff88;
+    --accent-purple: #7c6efa;
+    --text-primary: #f0f2f5;
+    --text-muted: rgba(240, 242, 245, 0.6);
+    --shadow-glow: 0 0 20px rgba(0, 255, 136, 0.15);
   }
 
   /* Dashboard theme presets, chosen in Settings and scoped to the
@@ -140,6 +151,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #0f1117;
+    font-size: 15px;
   }
   html {
     @apply font-sans;

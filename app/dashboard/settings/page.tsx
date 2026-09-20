@@ -11,7 +11,7 @@ export default async function SettingsPage() {
     .single()
 
   return (
-    <div className="flex h-full items-start justify-center overflow-auto p-6">
+    <div className="h-full overflow-auto bg-[#0F1117] px-4 py-8 sm:px-8">
       <SettingsForm config={config as BusinessConfig} />
     </div>
   )

@@ -20,10 +20,14 @@ export default async function ConversationsPage() {
   })
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full min-h-0">
       <ConversationList conversations={conversations} selectedId={null} />
-      <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
-        Select a conversation to view messages.
+      <div className="hidden min-h-0 flex-1 flex-col items-center justify-center gap-2 bg-[#0F1117] px-6 text-center md:flex">
+        <span className="text-5xl">💬</span>
+        <p className="text-base font-medium text-[var(--text-primary)]">Select a conversation</p>
+        <p className="max-w-xs text-sm text-[var(--text-muted)]">
+          Choose a conversation from the left to view messages
+        </p>
       </div>
     </div>
   )

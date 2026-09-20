@@ -1,9 +1,14 @@
 import type { Metadata } from "next"
-import { Baloo_2, Nunito_Sans, Fraunces, Karla, Sora, Work_Sans } from "next/font/google"
+import { Inter, Baloo_2, Nunito_Sans, Fraunces, Karla, Sora, Work_Sans } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+})
 const bobaHeading = Baloo_2({
   subsets: ["latin"],
   weight: ["600", "700"],
@@ -46,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={cn(
         "light",
+        inter.variable,
         bobaHeading.variable,
         bobaBody.variable,
         milkTeaHeading.variable,

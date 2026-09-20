@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { Search } from "lucide-react"
 import { toast } from "sonner"
 import { createClient } from "@/lib/supabase/client"
 import { maskPhoneNumber } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   ConversationListItem,
   type ConversationListItemData,
@@ -25,6 +25,7 @@ export function ConversationList({
   selectedId: string | null
 }) {
   const [list, setList] = useState(conversations)
+  const [query, setQuery] = useState("")
   const listRef = useRef(list)
 
   useEffect(() => {
@@ -92,13 +93,55 @@ export function ConversationList({
     }
   }, [])
 
+  const filteredList = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return list
+    return list.filter((c) => {
+      const haystack = `${c.contact_name ?? ""} ${c.wa_id} ${c.lastMessagePreview ?? ""}`.toLowerCase()
+      return haystack.includes(q)
+    })
+  }, [list, query])
+
   return (
-    <div className="flex min-h-0 w-80 shrink-0 flex-col border-r border-border">
-      <ScrollArea className="min-h-0 flex-1">
+    <div className="flex h-full w-full min-h-0 flex-col border-r border-white/[0.06] bg-[#0D0F14] md:w-80">
+      <div className="shrink-0 p-4">
+        <div className="relative">
+          <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-[var(--text-muted)]" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search conversations..."
+            className="w-full rounded-full border border-white/[0.08] bg-white/[0.04] py-2.5 pr-4 pl-10 text-[13px] text-[var(--text-primary)] transition-colors placeholder:text-[var(--text-muted)] focus:border-[rgba(0,255,136,0.3)] focus:outline-none"
+          />
+        </div>
+      </div>
+
+      <div className="flex shrink-0 items-center justify-between px-4 pb-2">
+        <span className="text-[11px] font-medium tracking-wider text-[var(--text-muted)] uppercase">
+          All Conversations
+        </span>
+        <span
+          className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+          style={{ background: "rgba(0,255,136,0.12)", color: "#00FF88" }}
+        >
+          {list.length} {list.length === 1 ? "chat" : "chats"}
+        </span>
+      </div>
+
+      <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto">
         {list.length === 0 ? (
-          <p className="p-4 text-sm text-muted-foreground">No conversations yet.</p>
+          <div className="flex h-full flex-col items-center justify-center gap-2 px-6 text-center">
+            <span className="text-4xl">🧋</span>
+            <p className="text-sm font-medium text-[var(--text-primary)]">No conversations yet</p>
+            <p className="text-xs text-[var(--text-muted)]">
+              Messages will appear here when customers contact you on WhatsApp
+            </p>
+          </div>
+        ) : filteredList.length === 0 ? (
+          <p className="p-6 text-center text-sm text-[var(--text-muted)]">No conversations found</p>
         ) : (
-          list.map((conversation) => (
+          filteredList.map((conversation) => (
             <ConversationListItem
               key={conversation.id}
               conversation={conversation}
@@ -106,7 +149,15 @@ export function ConversationList({
             />
           ))
         )}
-      </ScrollArea>
+      </div>
+
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 999px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+      `}</style>
     </div>
   )
 }

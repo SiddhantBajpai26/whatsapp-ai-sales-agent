@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export function TakeOverButton({
   conversationId,
@@ -40,8 +40,18 @@ export function TakeOverButton({
   }
 
   return (
-    <Button variant={aiEnabled ? "outline" : "secondary"} size="sm" disabled={loading} onClick={handleClick}>
-      {loading ? "Updating..." : aiEnabled ? "Take Over" : "Resume AI"}
-    </Button>
+    <button
+      type="button"
+      disabled={loading}
+      onClick={handleClick}
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors disabled:opacity-60",
+        aiEnabled
+          ? "bg-[rgba(255,107,107,0.15)] border-[rgba(255,107,107,0.3)] text-[#FF6B6B] hover:bg-[rgba(255,107,107,0.25)]"
+          : "bg-[rgba(0,255,136,0.12)] border-[rgba(0,255,136,0.2)] text-[#00FF88]"
+      )}
+    >
+      {loading ? "Updating..." : aiEnabled ? "⚡ Take Over" : "🤖 Return to AI"}
+    </button>
   )
 }

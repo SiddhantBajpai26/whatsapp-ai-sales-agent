@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
 
   if (isLoginRoute && userData?.user) {
     const url = request.nextUrl.clone()
-    url.pathname = "/dashboard/conversations"
+    url.pathname = "/"
     return NextResponse.redirect(url)
   }
 

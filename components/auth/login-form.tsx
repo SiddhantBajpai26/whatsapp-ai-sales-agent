@@ -29,7 +29,7 @@ export function LoginForm() {
       return
     }
 
-    router.push("/dashboard/conversations")
+    router.push("/")
     router.refresh()
   }
 

@@ -38,8 +38,10 @@ export default async function ConversationDetailPage({
   })
 
   return (
-    <div className="flex h-full">
-      <ConversationList conversations={conversations} selectedId={id} />
+    <div className="flex h-full min-h-0">
+      <div className="hidden min-h-0 md:flex">
+        <ConversationList conversations={conversations} selectedId={id} />
+      </div>
       <ConversationThread
         conversation={conversation as Conversation}
         initialMessages={(messages as Message[]) ?? []}
