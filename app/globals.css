@@ -1,0 +1,189 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* `dark:` only applies inside an ancestor with the `.dark` class — never via
+   OS prefers-color-scheme. No toggle is built, and `.dark` is never applied,
+   so the app always renders light-text-on-light-background... i.e. light mode. */
+@custom-variant dark (&:is(.dark *));
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Default dashboard preset: "Boba Green" */
+    --background: #f6fbf7;
+    --foreground: #142016;
+    --card: #ffffff;
+    --card-foreground: #142016;
+    --popover: #ffffff;
+    --popover-foreground: #142016;
+    --primary: #178a4c;
+    --primary-foreground: #ffffff;
+    --secondary: #e9f5ec;
+    --secondary-foreground: #16532f;
+    --muted: #eff5f0;
+    --muted-foreground: #5c6b60;
+    --accent: #e4f5e9;
+    --accent-foreground: #146b39;
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: #dcebe0;
+    --input: #dcebe0;
+    --ring: #17974c;
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+
+    --font-heading: var(--font-boba-heading), ui-rounded, "Segoe UI", sans-serif;
+    --font-sans: var(--font-boba-body), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Dashboard theme presets, chosen in Settings and scoped to the
+     authenticated dashboard shell (see app/dashboard/layout.tsx). Public
+     pages (home, login) always show the Boba Green default above. */
+  [data-brand-theme="milk-tea"] {
+    --background: #fbf3eb;
+    --foreground: #3a2a1e;
+    --card: #ffffff;
+    --card-foreground: #3a2a1e;
+    --popover: #ffffff;
+    --popover-foreground: #3a2a1e;
+    --primary: #8c5a2b;
+    --primary-foreground: #fff7ee;
+    --secondary: #f3e3d1;
+    --secondary-foreground: #5b3c1e;
+    --muted: #f3e9dd;
+    --muted-foreground: #8a7561;
+    --accent: #f3e3d1;
+    --accent-foreground: #6b4423;
+    --destructive: #b0402c;
+    --border: #ebddcb;
+    --input: #ebddcb;
+    --ring: #8c5a2b;
+    --font-heading: var(--font-milktea-heading), Georgia, serif;
+    --font-sans: var(--font-milktea-body), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  [data-brand-theme="classic-slate"] {
+    --background: #f4f6f8;
+    --foreground: #1b2430;
+    --card: #ffffff;
+    --card-foreground: #1b2430;
+    --popover: #ffffff;
+    --popover-foreground: #1b2430;
+    --primary: #3457d5;
+    --primary-foreground: #ffffff;
+    --secondary: #e7eeff;
+    --secondary-foreground: #223a8c;
+    --muted: #edf1f4;
+    --muted-foreground: #5b6b7a;
+    --accent: #e7eeff;
+    --accent-foreground: #2a46b0;
+    --destructive: #c43a38;
+    --border: #dee4ea;
+    --input: #dee4ea;
+    --ring: #3457d5;
+    --font-heading: var(--font-slate-heading), ui-sans-serif, system-ui, sans-serif;
+    --font-sans: var(--font-slate-body), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@theme inline {
+  --font-heading: var(--font-heading);
+  --font-sans: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
